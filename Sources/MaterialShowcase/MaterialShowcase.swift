@@ -7,7 +7,7 @@
 //
 import UIKit
 
-@objc public protocol MaterialShowcaseDelegate: class {
+@objc public protocol MaterialShowcaseDelegate: AnyObject {
   @objc optional func showCaseWillDismiss(showcase: MaterialShowcase, didTapTarget:Bool)
   @objc optional func showCaseDidDismiss(showcase: MaterialShowcase, didTapTarget:Bool)
 }
@@ -39,8 +39,10 @@ open class MaterialShowcase: UIView {
   let INSTRUCTIONS_CENTER_OFFSET: CGFloat = 20
   let LABEL_MARGIN: CGFloat = 40
   let TARGET_PADDING: CGFloat = 20
-  let SKIP_BUTTON_MARGIN: CGFloat = 16
-  let SKIP_BUTTON_CONTENT_INSET: CGFloat = 8
+  public var SKIP_BUTTON_MARGIN_LEFT: CGFloat = 16
+  public var SKIP_BUTTON_MARGIN_TOP: CGFloat = 16
+  public var SKIP_BUTTON_CONTENT_INSET_HORIZINTAL: CGFloat = 8
+  public var SKIP_BUTTON_CONTENT_INSET_VERTICAL: CGFloat = 8
   let SKIP_BUTTON_BORDER_WIDTH: CGFloat = 1
   let SKIP_BUTTON_CORNER_RADIUS: CGFloat = 4
 
@@ -236,8 +238,7 @@ extension MaterialShowcase {
         closeButton.setTitle(skipButtonTitle, for: .normal)
         closeButton.setBorderColor(primaryTextColor, width: SKIP_BUTTON_BORDER_WIDTH)
         closeButton.setCornerRadius(SKIP_BUTTON_CORNER_RADIUS)
-        closeButton.contentEdgeInsets = UIEdgeInsets(top: SKIP_BUTTON_CONTENT_INSET, left: SKIP_BUTTON_CONTENT_INSET, bottom: SKIP_BUTTON_CONTENT_INSET, right: SKIP_BUTTON_CONTENT_INSET)
-
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: SKIP_BUTTON_CONTENT_INSET_VERTICAL, left: SKIP_BUTTON_CONTENT_INSET_HORIZINTAL, bottom: SKIP_BUTTON_CONTENT_INSET_VERTICAL, right: SKIP_BUTTON_CONTENT_INSET_HORIZINTAL)
       } else {
         closeButton.setImage(UIImage(named: skipButtonImage), for: .normal)
       }
@@ -265,8 +266,8 @@ extension MaterialShowcase {
           closeButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: 0).isActive = true
           closeButton.rightAnchor.constraint(equalTo: margins.rightAnchor, constant: -8).isActive = true
         case .belowInstruction:
-          closeButton.topAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: SKIP_BUTTON_MARGIN).isActive = true
-          closeButton.leftAnchor.constraint(equalTo: instructionView.leftAnchor, constant: SKIP_BUTTON_MARGIN).isActive = true
+          closeButton.topAnchor.constraint(equalTo: instructionView.bottomAnchor, constant: SKIP_BUTTON_MARGIN_TOP).isActive = true
+          closeButton.leftAnchor.constraint(equalTo: instructionView.leftAnchor, constant: SKIP_BUTTON_MARGIN_LEFT).isActive = true
         }
       } else {
         // Fallback on earlier versions
